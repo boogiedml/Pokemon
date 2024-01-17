@@ -13,7 +13,7 @@ export const Stat = ({ title, rangeValue }) => {
 
   return (
     <div className="mb-4">
-      <label className="block mb-1 text-sm font-grotesk capitalize">
+      <label className="block mb-1 text-sm font-poppins capitalize">
         {title}
       </label>
       <div className="relative h-1.5 bg-gray-300 rounded-md">

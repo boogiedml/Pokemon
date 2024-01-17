@@ -8,6 +8,7 @@ import { useGetPokemonQuery } from "../redux/services/pokemon";
 import { setSelectedPokemon } from "../redux/features/pokemonSlice";
 import { Stat } from "../components/Stat";
 import { MyTeamBtn } from "../components/MyTeamBtn";
+import Preloader from "../components/Preloader";
 
 const PokemonDetails = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const PokemonDetails = () => {
   const queryParams = new URLSearchParams(location.search);
   const pokeId = queryParams.get("pokeId");
   const { selectedPokemon } = useSelector((state) => state.pokemon);
-  const { data: pokemonDetail, error, isLoading } = useGetPokemonQuery(pokeId);
+  const { data: pokemonDetail, isLoading } = useGetPokemonQuery(pokeId);
 
   useEffect(() => {
     if (pokemonDetail) {
@@ -33,7 +34,6 @@ const PokemonDetails = () => {
   const handleAddToTeam = () => {
     const existingTeam = JSON.parse(localStorage.getItem("myPokemons")) || [];
 
-    // Check if the selectedPokemon is already in the team
     const isAlreadyInTeam = existingTeam.some(
       (pokemon) => pokemon.id === selectedPokemon.id
     );
@@ -43,7 +43,6 @@ const PokemonDetails = () => {
       localStorage.setItem("myPokemons", JSON.stringify(updatedTeam));
       setIsInTeam(true);
     } else if (isAlreadyInTeam) {
-      // Remove the selectedPokemon from the team
       const updatedTeam = existingTeam.filter(
         (pokemon) => pokemon.id !== selectedPokemon.id
       );
@@ -53,6 +52,10 @@ const PokemonDetails = () => {
       alert("You can only have a maximum of 6 Pokémon in your team.");
     }
   };
+
+   if (isLoading && !selectedPokemon) {
+     return <Preloader show={!isLoading ? false : true} />;
+   }
 
   return (
     <>
@@ -104,7 +107,7 @@ const PokemonDetails = () => {
             onClick={handleAddToTeam}
             className={`w-fit md:absolute md:bottom-5 md:right-5 ${
               isInTeam ? "bg-[#F14B3D]" : "bg-mainBlue"
-            } text-white py-1.5 px-5 rounded-full bg-[1px] border-white font-grotesk font-[500] cursor-pointer`}
+            } text-white py-1.5 px-5 rounded-full bg-[1px] border-whit font-[500] cursor-pointer`}
           >
             {isInTeam ? "Remove from team" : "Add to team"}
           </div>
@@ -117,13 +120,13 @@ const PokemonDetails = () => {
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="w-full">
-              <p className="text-center font-[500] font-grotesk">Height</p>
+              <p className="text-center font-[500] font-poppins">Height</p>
               <div className="w-full bg-lightGray border-[1px] border-[#E3E8E6] rounded-md text-sm p-2 text-center font-[500]">
                 {selectedPokemon?.height}
               </div>
             </div>
             <div className="w-full">
-              <p className="text-center font-[500] font-grotesk">Weight</p>
+              <p className="text-center font-[500] font-poppins">Weight</p>
               <div className="w-full bg-lightGray border-[1px] border-[#E3E8E6] rounded-md text-sm p-2 text-center font-[500]">
                 {selectedPokemon?.weight}
               </div>
@@ -140,7 +143,7 @@ const PokemonDetails = () => {
             {selectedPokemon?.moves.slice(0, 25).map((m, i) => (
               <span
                 key={`move${i}`}
-                className="bg-mainBlue text-white text-center rounded-md p-2 hover:scale-105 transition-all duration-300"
+                className="bg-mainBlue capitalize text-white text-center rounded-md p-2 hover:scale-105 transition-all duration-300"
               >
                 {m.move.name}
               </span>
@@ -169,7 +172,7 @@ const PokemonDetails = () => {
             {selectedPokemon?.abilities.map((a, i) => (
               <span
                 key={`ability${i}`}
-                className="relative bg-reallyGray text-white text-center rounded-md p-2 hover:scale-105 transition-all duration-300"
+                className="relative bg-reallyGray text-white text-center rounded-md p-2 capitalize hover:scale-105 transition-all duration-300"
               >
                 {a.is_hidden ? (
                   <span className="bg-[#F14B3D] absolute top-3 right-3 w-3 h-3 rounded-full"></span>

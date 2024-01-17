@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { setSelectedPokemon } from "../redux/features/pokemonSlice";
 import { getTypeClassName } from "../data";
@@ -10,7 +11,7 @@ export const PokemonCard = ({ props }) => {
   const dispatch = useDispatch();
 
   return (
-    <div
+    <motion.div
       onClick={() => {
         dispatch(setSelectedPokemon(props));
         navigate(`/pokemón/${props.name}?pokeId=${props.id}`);
@@ -42,6 +43,6 @@ export const PokemonCard = ({ props }) => {
           </span>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };

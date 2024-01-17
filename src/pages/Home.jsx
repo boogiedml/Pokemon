@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { PokemonSearch } from "../components/PokemonSearch";
 import { PokemonList } from "../components/PokemonList";
@@ -9,12 +9,14 @@ import {
   setAllPokemonData,
 } from "../redux/features/pokemonSlice";
 import { MyTeamBtn } from "../components/MyTeamBtn";
+import Preloader from "../components/Preloader";
 
 const Home = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const { allPokemonData } = useSelector((state) => state.pokemon);
 
-  const { data: pokemonList, error, isLoading } = useGetAllPokemonQuery();
+  const { data: pokemonList, isLoading } = useGetAllPokemonQuery();
 
   useEffect(() => {
     if (pokemonList) {
@@ -30,8 +32,20 @@ const Home = () => {
     fetch(url)
       .then((response) => response.json())
       .then(function (pokeData) {
-        dispatch(setAllPokemonData(pokeData));
+        const isPokemonDataExists = allPokemonData.some(
+          (data) => data.id === pokeData.id
+        );
+
+        console.log(isPokemonDataExists);
+
+        if (!isPokemonDataExists) {
+          dispatch(setAllPokemonData(pokeData));
+        }
       });
+  }
+
+  if (isLoading && allPokemonData.length === 0) {
+    return <Preloader show={!isLoading ? false : true} />;
   }
 
   return (

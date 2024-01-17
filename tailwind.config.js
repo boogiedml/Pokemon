@@ -10,8 +10,8 @@ export default {
         reallyGray: "#595F65"
       },
       fontFamily: {
-        grotesk: ["Space Grotesk", "sans-serif"],
-        montserrat: ["Montserrat", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
     },
   },

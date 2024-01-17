@@ -7,7 +7,7 @@ export const MyTeamBtn = () => {
   return (
     <div
       onClick={() => navigate("/pokemón/my-team")}
-      className="fixed bottom-5 right-5 bg-mainBlue py-1.5 px-5 rounded-full border-[1px] border-white font-grotesk font-[500] cursor-pointer"
+      className="fixed bottom-5 right-5 bg-mainBlue py-1.5 px-5 rounded-full border-[2px] border-white font-inter font-[500] cursor-pointer"
     >
       My Team
     </div>

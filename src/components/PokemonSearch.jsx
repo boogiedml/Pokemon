@@ -11,17 +11,17 @@ export const PokemonSearch = ({ setSearchQuery }) => {
   };
 
   return (
-    <div className="bg-white text-black max-w-lg mx-auto rounded-full py-3 px-5 relative">
-      <FiSearch size={20} className="absolute left-4 top-4" />
+    <div className="bg-white text-black max-w-lg mx-auto rounded-full py-2.5 md:py-3 px-5 relative">
+      <FiSearch size={20} className="absolute left-4 top-3.5 md:top-4" />
       <input
         type="text"
-        className="w-full h-full outline-none border-none ps-6 pe-9 placeholder:text-reallyGray"
+        className="w-full h-full outline-none border-none ps-6 pe-9 placeholder:text-reallyGray font-poppins"
         placeholder="Eg. Pikahu"
         onChange={handleInputChange}
       />
       <button
         onClick={handleSearchClick}
-        className="absolute right-1 top-1 bg-black text-white px-3 py-2 rounded-full font-[500] hover:-rotate-45 transition-all duration-300"
+        className="absolute right-1 top-1 bg-black text-white px-3 py-1.5 md:py-2 rounded-full font-[500] hover:-rotate-45 transition-all duration-300"
       >
         Go
       </button>
