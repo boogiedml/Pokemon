@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -7,10 +7,12 @@ import { getTypeClassName } from "../data";
 import { useGetPokemonQuery } from "../redux/services/pokemon";
 import { setSelectedPokemon } from "../redux/features/pokemonSlice";
 import { Stat } from "../components/Stat";
+import { MyTeamBtn } from "../components/MyTeamBtn";
 
 const PokemonDetails = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const [isInTeam, setIsInTeam] = useState(false);
   const queryParams = new URLSearchParams(location.search);
   const pokeId = queryParams.get("pokeId");
   const { selectedPokemon } = useSelector((state) => state.pokemon);
@@ -19,20 +21,50 @@ const PokemonDetails = () => {
   useEffect(() => {
     if (pokemonDetail) {
       dispatch(setSelectedPokemon(pokemonDetail));
+
+      const existingTeam = JSON.parse(localStorage.getItem("myPokemons")) || [];
+      const isAlreadyInTeam = existingTeam.some(
+        (pokemon) => pokemon.id === pokemonDetail.id
+      );
+      setIsInTeam(isAlreadyInTeam);
     }
-  }, [pokemonDetail]);
+  }, [pokemonDetail, dispatch]);
+
+  const handleAddToTeam = () => {
+    const existingTeam = JSON.parse(localStorage.getItem("myPokemons")) || [];
+
+    // Check if the selectedPokemon is already in the team
+    const isAlreadyInTeam = existingTeam.some(
+      (pokemon) => pokemon.id === selectedPokemon.id
+    );
+
+    if (!isAlreadyInTeam && existingTeam.length < 6) {
+      const updatedTeam = [...existingTeam, selectedPokemon];
+      localStorage.setItem("myPokemons", JSON.stringify(updatedTeam));
+      setIsInTeam(true);
+    } else if (isAlreadyInTeam) {
+      // Remove the selectedPokemon from the team
+      const updatedTeam = existingTeam.filter(
+        (pokemon) => pokemon.id !== selectedPokemon.id
+      );
+      localStorage.setItem("myPokemons", JSON.stringify(updatedTeam));
+      setIsInTeam(false);
+    } else {
+      alert("You can only have a maximum of 6 Pokémon in your team.");
+    }
+  };
 
   return (
     <>
       <Navbar />
       <section className="px-5 md:px-10 lg:px-14 xl:px-20 mt-28 mb-10 flex flex-col gap-5">
-        <div className="bg-white text-black p-5 rounded-lg shadow-md">
+        <div className="relative bg-white text-black p-5 rounded-lg shadow-md">
           <div className="flex justify-between items-center">
             <div>
               <p className="text-reallyGray font-[500] mb-2">
                 #{selectedPokemon?.id}
               </p>
-              <h3 className="text-mainBlue font-montserrat text-xl font-[500] capitalize">
+              <h3 className="text-mainBlue font-montserrat text-lg md:text-xl font-[500] capitalize">
                 {selectedPokemon?.name}
               </h3>
             </div>
@@ -68,11 +100,19 @@ const PokemonDetails = () => {
               />
             </div>
           </div>
+          <div
+            onClick={handleAddToTeam}
+            className={`w-fit md:absolute md:bottom-5 md:right-5 ${
+              isInTeam ? "bg-[#F14B3D]" : "bg-mainBlue"
+            } text-white py-1.5 px-5 rounded-full bg-[1px] border-white font-grotesk font-[500] cursor-pointer`}
+          >
+            {isInTeam ? "Remove from team" : "Add to team"}
+          </div>
         </div>
 
         {/* Breeding  */}
         <div className="bg-white text-black p-5 rounded-lg shadow-md">
-          <h3 className="text-mainBlue font-montserrat text-xl font-[500] capitalize mb-3">
+          <h3 className="text-mainBlue font-montserrat text-lg md:text-xl font-[500] capitalize mb-3">
             Breeding
           </h3>
           <div className="grid grid-cols-2 gap-4">
@@ -93,7 +133,7 @@ const PokemonDetails = () => {
 
         {/* Moves  */}
         <div className="bg-white text-black p-5 rounded-lg shadow-md">
-          <h3 className="text-mainBlue font-montserrat text-xl font-[500] capitalize mb-3">
+          <h3 className="text-mainBlue font-montserrat text-lg md:text-xl font-[500] capitalize mb-3">
             Moves
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -111,7 +151,7 @@ const PokemonDetails = () => {
         {/* Abilities  */}
         <div className="bg-white text-black p-5 rounded-lg shadow-md">
           <div className="flex justify-between mb-3">
-            <h3 className="text-mainBlue font-montserrat text-xl font-[500] capitalize">
+            <h3 className="text-mainBlue font-montserrat text-lg md:text-xl font-[500] capitalize">
               Abilities
             </h3>
             <div className="flex items-center gap-3">
@@ -142,6 +182,7 @@ const PokemonDetails = () => {
           </div>
         </div>
       </section>
+      <MyTeamBtn />
     </>
   );
 };

@@ -8,6 +8,7 @@ import {
   setAllPokemon,
   setAllPokemonData,
 } from "../redux/features/pokemonSlice";
+import { MyTeamBtn } from "../components/MyTeamBtn";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const Home = () => {
         <PokemonSearch setSearchQuery={setSearchQuery} />
       </header>
       <PokemonList filter={searchQuery} />
+      <MyTeamBtn />
     </>
   );
 };

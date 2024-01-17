@@ -13,7 +13,7 @@ export const PokemonCard = ({ props }) => {
     <div
       onClick={() => {
         dispatch(setSelectedPokemon(props));
-        navigate(`/pokemon/${props.name}?pokeId=${props.id}`);
+        navigate(`/pokemón/${props.name}?pokeId=${props.id}`);
       }}
       className="bg-white text-black hover:bg-lightGray transition-all duration-500 p-5 rounded-lg shadow-md cursor-pointer"
     >

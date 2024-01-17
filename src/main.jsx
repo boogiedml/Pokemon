@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 
 import { store } from "./redux/store";
 import "./index.css";
+
 // scroll to top
 import ScrollToTop from "./helpers/ScrollToTop.js";
 
