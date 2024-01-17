@@ -1,8 +1,12 @@
-# React + Vite
+# Pokemon Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React web app that allows users to search for and manage Pokemon.
 
-Currently, two official plugins are available:
+Features
+Search for random Pokemon.
+Retrieve Pokemon by name.
+View Pokemon details.
+Add and remove Pokemon from your team.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+APIs Used
+This project utilizes the PokeAPI for fetching Pokemon data.
