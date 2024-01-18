@@ -150,7 +150,7 @@ const PokemonDetails = () => {
                   randomColors[Math.floor(Math.random() * randomColors.length)]
                 } capitalize text-white text-center rounded-md p-2 hover:scale-105 transition-all duration-300`}
               >
-                <h6 className="text-reallyGray bg-white h-6 w-6 flex justify-center items-center font-bold rounded-full mx-auto mb-2">
+                <h6 className="text-reallyGray bg-white h-6 w-6 flex justify-center items-center font-semibold rounded-full mx-auto mb-2">
                   {m.move.name[0]}
                 </h6>
                 <span>{m.move.name}</span>
