@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
-import { getTypeClassName } from "../data";
+import { getTypeClassName, randomColors } from "../data";
 import { useGetPokemonQuery } from "../redux/services/pokemon";
 import { setSelectedPokemon } from "../redux/features/pokemonSlice";
 import { Stat } from "../components/Stat";
@@ -144,12 +144,17 @@ const PokemonDetails = () => {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {selectedPokemon?.moves.slice(0, 25).map((m, i) => (
-              <span
+              <div
                 key={`move${i}`}
-                className="bg-mainBlue capitalize text-white text-center rounded-md p-2 hover:scale-105 transition-all duration-300"
+                className={`${
+                  randomColors[Math.floor(Math.random() * randomColors.length)]
+                } capitalize text-white text-center rounded-md p-2 hover:scale-105 transition-all duration-300`}
               >
-                {m.move.name}
-              </span>
+                <h6 className="text-reallyGray bg-white h-6 w-6 flex justify-center items-center font-bold rounded-full mx-auto mb-2">
+                  {m.move.name[0]}
+                </h6>
+                <span>{m.move.name}</span>
+              </div>
             ))}
           </div>
         </div>

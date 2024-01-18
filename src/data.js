@@ -23,3 +23,24 @@ export const getTypeClassName = (typeName) => {
 
   return typeColors[typeName] || typeColors.default;
 };
+
+export const randomColors = [
+  "bg-[#049669]",
+  "bg-[#2EC5B6]",
+  "bg-[#15C173]",
+  "bg-[#72E3A6]",
+  "bg-[#43474A]",
+  "bg-[#8A9CAD]",
+  "bg-[#C18CB9]",
+  "bg-[#9A55A1]",
+  "bg-[#63320B]",
+  "bg-[#875629]",
+  "bg-[#C75001]",
+  "bg-[#F0271B]",
+  "bg-[#FEBF02]",
+  "bg-[#6E45FF]",
+  "bg-[#DB00B5]",
+  "bg-[#EF4268]",
+  "bg-[#4360ED]",
+  "bg-[#90E0EE]",
+];
