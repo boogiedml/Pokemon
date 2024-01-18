@@ -121,7 +121,7 @@ const PokemonDetails = () => {
           <h3 className="text-mainBlue font-montserrat text-lg md:text-xl font-[500] capitalize mb-3">
             Breeding
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2 md:gap-4">
             <div className="w-full">
               <p className="text-center font-[500] font-poppins">Height</p>
               <div className="w-full bg-lightGray border-[1px] border-[#E3E8E6] rounded-md text-sm p-2 text-center font-[500]">
@@ -163,27 +163,30 @@ const PokemonDetails = () => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
                 <span className="bg-[#F14B3D] w-3 h-3 rounded-full"></span>
-                <small className="font-[500]">Hidden</small>
+                <small className="font-[500] font-poppins">Hidden</small>
               </div>
               <div className="flex items-center gap-1">
                 <span className="bg-[#60D394] w-3 h-3 rounded-full"></span>
-                <small className="font-[500]">Active</small>
+                <small className="font-[500] font-poppins">Active</small>
               </div>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {selectedPokemon?.abilities.map((a, i) => (
-              <span
+              <div
                 key={`ability${i}`}
                 className="relative bg-reallyGray text-white text-center rounded-md p-2 capitalize hover:scale-105 transition-all duration-300"
               >
+                <h6 className="text-reallyGray bg-white h-6 w-6 flex justify-center items-center font-semibold rounded-full mx-auto mb-2">
+                  {a.ability.name[0]}
+                </h6>
+                <span>{a.ability.name}</span>
                 {a.is_hidden ? (
                   <span className="bg-[#F14B3D] absolute top-3 right-3 w-3 h-3 rounded-full"></span>
                 ) : (
                   <span className="bg-[#60D394] absolute top-3 right-3 w-3 h-3 rounded-full"></span>
                 )}
-                {a.ability.name}
-              </span>
+              </div>
             ))}
           </div>
         </div>
