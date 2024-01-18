@@ -14,6 +14,7 @@ const PokemonDetails = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [isInTeam, setIsInTeam] = useState(false);
+  const [localDataArrived, setLocalDataArrived] = useState(false);
   const queryParams = new URLSearchParams(location.search);
   const pokeId = queryParams.get("pokeId");
   const { selectedPokemon } = useSelector((state) => state.pokemon);
@@ -28,12 +29,12 @@ const PokemonDetails = () => {
         (pokemon) => pokemon.id === pokemonDetail.id
       );
       setIsInTeam(isAlreadyInTeam);
+      setLocalDataArrived(true);
     }
   }, [pokemonDetail, dispatch]);
 
   const handleAddToTeam = () => {
     const existingTeam = JSON.parse(localStorage.getItem("myPokemons")) || [];
-
     const isAlreadyInTeam = existingTeam.some(
       (pokemon) => pokemon.id === selectedPokemon.id
     );
@@ -53,9 +54,9 @@ const PokemonDetails = () => {
     }
   };
 
-   if (isLoading && !selectedPokemon) {
-     return <Preloader show={!isLoading ? false : true} />;
-   }
+  if (isLoading && !selectedPokemon) {
+    return <Preloader show={!isLoading ? false : true} />;
+  }
 
   return (
     <>
@@ -103,14 +104,16 @@ const PokemonDetails = () => {
               />
             </div>
           </div>
-          <div
-            onClick={handleAddToTeam}
-            className={`w-fit md:absolute md:bottom-5 md:right-5 ${
-              isInTeam ? "bg-[#F14B3D]" : "bg-mainBlue"
-            } text-white py-1.5 px-5 rounded-full bg-[1px] border-whit font-[500] cursor-pointer`}
-          >
-            {isInTeam ? "Remove from team" : "Add to team"}
-          </div>
+          {localDataArrived && (
+            <div
+              onClick={handleAddToTeam}
+              className={`w-fit md:absolute md:bottom-5 md:right-5 ${
+                isInTeam ? "bg-[#F14B3D]" : "bg-mainBlue"
+              } text-white py-1.5 px-5 rounded-full bg-[1px] border-whit font-[500] cursor-pointer`}
+            >
+              {isInTeam ? "Remove from team" : "Add to team"}
+            </div>
+          )}
         </div>
 
         {/* Breeding  */}
